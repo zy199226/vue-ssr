@@ -33,6 +33,15 @@ export default defineConfig(context => ({
             },
         },
     },
+    server: {
+        host: '0.0.0.0',
+        // proxy: {
+        //     '/api': {
+        //         target: 'https://xxx.com/',
+        //         changeOrigin: true,
+        //     },
+        // },
+    },
     resolve: {
         alias: {
             '~': path.resolve(__dirname, './'), // 根路径

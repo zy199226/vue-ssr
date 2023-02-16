@@ -5,12 +5,11 @@ import express from 'express';
 import serverRoutes from './serverRoutes';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const { BASE_URL, VITE_PORT } = (<any>import.meta).env;
+const { BASE_URL, VITE_PORT, PROD } = (<any>import.meta).env;
 
 async function createServer() {
-    const isProd = process.env.NODE_ENV === 'production';
-    const indexProd = isProd ? fs.readFileSync(path.resolve(__dirname, '../dist/client/ssrBase.html'), 'utf-8') : '';
-    const manifest = isProd ? JSON.parse(fs.readFileSync(path.resolve(__dirname, '../dist/client/ssr-manifest.json'), 'utf-8')) : {};
+    const indexProd = PROD ? fs.readFileSync(path.resolve(__dirname, '../dist/client/ssrBase.html'), 'utf-8') : '';
+    const manifest = PROD ? JSON.parse(fs.readFileSync(path.resolve(__dirname, '../dist/client/ssr-manifest.json'), 'utf-8')) : {};
     const app = express();
     serverRoutes(app);
 
@@ -18,7 +17,7 @@ async function createServer() {
      * @type {import('vite').ViteDevServer}
      */
     let vite: any = undefined;
-    if (isProd) {
+    if (PROD) {
         app.use((await import('compression')).default());
         app.use(
             BASE_URL,
@@ -57,7 +56,7 @@ async function createServer() {
         
         try {
             let template, render;
-            if (isProd) {
+            if (PROD) {
                 template = indexProd;
                 render = (await import('../dist/server/entry-server.js')).render;
             } else {

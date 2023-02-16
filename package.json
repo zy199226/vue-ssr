@@ -8,7 +8,7 @@
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --outDir dist/server --ssr server/entry-server.ts",
-    "serve": "NODE_ENV=production vite-node server/server -w"
+    "serve": "NODE_ENV=production vite-node server/server"
   },
   "dependencies": {
     "vue": "^3.2.45",
