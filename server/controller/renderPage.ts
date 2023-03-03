@@ -5,13 +5,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
 
+const isDev = process.env.NODE_ENV === 'development';
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 const toAbsolute = (p: string) => path.resolve(__dirname, p);
 
-const manifest = JSON.parse(fs.readFileSync(toAbsolute('../../dist/client/ssr-manifest.json'), 'utf-8'));
-const template = fs.readFileSync(toAbsolute('../../dist/client/ssrBase.html'), 'utf-8');
-const { render } = await import('../../dist/server/entry-server.js');
+const manifest = isDev ? {} : JSON.parse(fs.readFileSync(toAbsolute('../../dist/client/ssr-manifest.json'), 'utf-8'));
+const template = isDev ? '' : fs.readFileSync(toAbsolute('../../dist/client/ssrBase.html'), 'utf-8');
+const { render } = isDev ? () => [] : await import('../../dist/server/entry-server.js');
 
 /**
  * 生成文件，自动生成路径，如果有 content 则以路径最后一个值写入文件，没有则全部生成路径

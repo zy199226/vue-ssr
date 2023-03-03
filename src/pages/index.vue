@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import HelloWorld from '@/components/HelloWorld.vue';
-import useHead from '@/utils/vHead';
+import { useHead } from '@/utils/baseUtils';
 
 if (import.meta.env.SSR) {
     useHead({

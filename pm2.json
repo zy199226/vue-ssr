@@ -1,0 +1,24 @@
+{
+  "name": "testtest",
+  "exec_mode": "cluster",
+  "instances": "max",
+  "script": "./node_modules/vite-node/vite-node.mjs",
+  "args": "server/server.ts",
+  "ignore_watch": [
+    "node_modules",
+    "logs"
+  ],
+  "watch_options": {
+    "followSymlinks": false
+  },
+  "log_date_format": "YYYY-MM-DD HH:mm:ss",
+  "error_file": "./logs/app-err.log",
+  "out_file": "./logs/app-out.log",
+  "env_pro": {
+    "NODE_ENV": "production"
+  },
+  "env_pre": {
+    "NODE_ENV": "preview"
+  },
+  "port": 22000
+}
